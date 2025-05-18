@@ -266,18 +266,27 @@ Response Body:
 ## Project Structure
 bookshelf-api/
 ├── src/
-│   ├── server.js
-│   ├── routes.js
-│   ├── handler.js
-│   ├── books.js
+│   ├── constants/
+│   │   └── messages.js
 │   ├── db/
-│   │   ├── index.js
-│   │   ├── queries.js
-│   │   └── models.js
+│   │   └── books.js
+│   ├── handlers/
+│   │   └── handler.js
+│   ├── models/
+│   │   └── addBook.js
+│   │   └── deleteBookById.js
+│   │   └── getAllBooks.js
+│   │   └── getBookById.js
+│   │   └── updateBookById.js
+│   ├── routes/
+│   │   └── routes.js
 │   └── utils/
-│       └── response.js
-├── package.json
+│   │   └── response.js
+│   ├── server.js
 ├── .env
+├── .gitignore
+├── .package-lock.json
+├── .package.json
 └── README.md
 
 ⚠️ Package `nanoid` menggunakan versi 3.3.4 agar tetap kompatibel dengan CommonJS, sesuai ketentuan Dicoding.
