@@ -94,7 +94,45 @@ const getBookByIdHandler = (request, h) => {
 };
 
 const updateBookByIdHandler = (request, h) => {
-  return updateBookById(request, h);
+  const { bookId } = request.params;
+  const { name, pageCount, readPage } = request.payload;
+
+  // Validasi : name wajib ada
+  if (!name) {
+    return h.response({
+      status: "fail",
+      message: messages.MISSING_NAME,
+    }).code;
+  }
+
+  // Validasi : readPage tidak boleh melebihi PageCount
+  if (readPage > pageCount) {
+    return h
+      .response({
+        status: "fail",
+        message: messages.INVALID_READPAGE,
+      })
+      .code(400);
+  }
+
+  // Coba perbarui buku
+  const isSuccess = updateBookById(bookId, request.payload);
+
+  if (!isSuccess) {
+    return h
+      .response({
+        status: "fail",
+        message: messages.UPDATE_FAIL_ID_NOT_FOUND,
+      })
+      .code(404);
+  }
+
+  return h
+    .response({
+      status: "success",
+      message: messages.UPDATE_SUCCESS,
+    })
+    .code(200);
 };
 
 const deleteBookByIdHandler = (request, h) => {
