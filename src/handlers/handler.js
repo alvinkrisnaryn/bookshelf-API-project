@@ -58,11 +58,39 @@ const addBookHandler = (request, h) => {
 };
 
 const getAllBooksHandler = (request, h) => {
-  return getAllBooks(request, h);
+  const books = getAllBooks();
+  return h
+    .response({
+      status: "success",
+      data: {
+        books,
+      },
+    })
+    .code(200);
 };
 
 const getBookByIdHandler = (request, h) => {
-  return getBookById(request, h);
+  const { bookId } = request.params;
+  const book = getBookById(bookId);
+
+  if (!book) {
+    return h
+      .response({
+        status: "fail",
+        message: messages.BOOK_NOT_FOUND,
+      })
+      .code(404);
+  }
+
+  return h
+    .response({
+      status: "success",
+      message: messages.BOOK_FOUND,
+      data: {
+        book,
+      },
+    })
+    .code(200);
 };
 
 const updateBookByIdHandler = (request, h) => {
