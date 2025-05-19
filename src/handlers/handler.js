@@ -3,9 +3,58 @@ const getAllBooks = require("../models/getAllBooks");
 const getBookById = require("../models/getBookById");
 const updateBookById = require("../models/updateBookById");
 const deleteBookById = require("../models/deleteBookById");
+const messages = require("../constants/messages");
+const books = require("../db/books");
 
 const addBookHandler = (request, h) => {
-  return addbook(request, h);
+  const { name, pageCount, readPage } = request.payload;
+
+  // Validasi: name wajib ada
+  if (!name) {
+    return h
+      .response({
+        status: "fail",
+        message:
+          messages.ADD_BOOK_FAILED ||
+          "Gagal menambahkan buku. Mohon isi nama buku",
+      })
+      .code(400);
+  }
+
+  // Validasi: readPage tidak boleh melebihi PageCount
+  if (readPage > pageCount) {
+    return h
+      .response({
+        status: "fail",
+        message:
+          messages.INVALID_READPAGE ||
+          "Gagal menambahkan buku. readPage tidak boleh lebih besar dari pageCount",
+      })
+      .code(400);
+  }
+
+  const bookId = addbook(request.payload);
+
+  const isSuccess = books.some((book) => book.id === bookId);
+
+  if (isSuccess) {
+    return h
+      .response({
+        status: "success",
+        message: messages.ADD_BOOK_SUCCESS || "Buku berhasil ditambahkan",
+        data: {
+          bookId,
+        },
+      })
+      .code(201);
+  }
+
+  return h
+    .response({
+      status: "fail",
+      message: "Buku gagal ditambahkan",
+    })
+    .code(500);
 };
 
 const getAllBooksHandler = (request, h) => {

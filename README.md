@@ -290,3 +290,27 @@ bookshelf-api/
 └── README.md
 
 ⚠️ Package `nanoid` menggunakan versi 3.3.4 agar tetap kompatibel dengan CommonJS, sesuai ketentuan Dicoding.
+
+## Daftar EndPoint API's
+📘 POST - Menambah Buku
+- /books – Add Book With Complete Data
+- /books – Add Book With Finished Reading
+- /books – Add Book Without Name
+- /books – Add Book with Page Read More Than Page Count
+
+📗 GET - Mengambil Buku
+- /books – Get All Books
+- /books/{bookId} – Get Detail Book With Correct Id
+- /books/{bookId} – Get Detail Finished Book
+- /books/{bookId} – Get Detail Book With Invalid Id
+
+📘 PUT - Memperbarui Buku
+- /books/{bookId} – Update Book With Complete Data
+- /books/{bookId} – Update Book Without Name
+- /books/{bookId} – Update Book With Page Read More Than Page Count
+- /books/{bookId} – Update Book with Invalid Id
+
+🗑️ DELETE - Menghapus Buku
+- /books/{bookId} – Delete Book with Correct Id
+- /books/{bookId} – Delete Finished Book
+- /books/{bookId} – Delete Book with Invalid Id
