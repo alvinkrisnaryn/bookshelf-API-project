@@ -136,7 +136,25 @@ const updateBookByIdHandler = (request, h) => {
 };
 
 const deleteBookByIdHandler = (request, h) => {
-  return deleteBookById(request, h);
+  const { bookId } = request.params;
+
+  const isSuccess = deleteBookById(bookId);
+
+  if (!isSuccess) {
+    return h
+      .response({
+        status: "fail",
+        message: messages.DELETE_FAIL_ID_NOT_FOUND,
+      })
+      .code(404);
+  }
+
+  return h
+    .response({
+      status: "success",
+      message: messages.DELETE_SUCCESS,
+    })
+    .code(200);
 };
 
 module.exports = {

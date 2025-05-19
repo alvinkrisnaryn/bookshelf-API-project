@@ -6,7 +6,7 @@ module.exports = {
   BOOK_FOUND: "Buku berhasil ditambahkan",
   BOOK_NOT_FOUND: "Buku tidak ditemukan",
   UPDATE_FAIL_ID_NOT_FOUND: "Gagal memperbarui buku. Id tidak ditemukan",
-  DELETE_FAIL_ID_NOT_FOUND: "Buku gagal dihapus. Id tidak ditemukan",
   UPDATE_SUCCESS: "Buku berhasil diperbarui",
+  DELETE_FAIL_ID_NOT_FOUND: "Buku gagal dihapus. Id tidak ditemukan",
   DELETE_SUCCESS: "Buku berhasil dihapus",
 };
