@@ -98,11 +98,13 @@ const updateBookByIdHandler = (request, h) => {
   const { name, pageCount, readPage } = request.payload;
 
   // Validasi : name wajib ada
-  if (!name) {
-    return h.response({
-      status: "fail",
-      message: messages.MISSING_NAME,
-    }).code;
+  if (name === undefined || name === null || name === "") {
+    return h
+      .response({
+        status: "fail",
+        message: messages.MISSING_NAME_UPDATE,
+      })
+      .code(400);
   }
 
   // Validasi : readPage tidak boleh melebihi PageCount
@@ -110,7 +112,7 @@ const updateBookByIdHandler = (request, h) => {
     return h
       .response({
         status: "fail",
-        message: messages.INVALID_READPAGE,
+        message: messages.INVALID_READPAGE_UPDATE,
       })
       .code(400);
   }
@@ -138,13 +140,33 @@ const updateBookByIdHandler = (request, h) => {
 const deleteBookByIdHandler = (request, h) => {
   const { bookId } = request.params;
 
+  const book = books.find((b) => b.id === bookId);
+
+  if (!book) {
+    return h
+      .response({
+        status: "fail",
+        message: messages.DELETE_FAIL_ID_NOT_FOUND,
+      })
+      .code(404);
+  }
+
+  if (book.finished) {
+    return h
+      .response({
+        status: "fail",
+        message: message.DELETE_FAIL_FINISHED_BOOK,
+      })
+      .code(400);
+  }
+
   const isSuccess = deleteBookById(bookId);
 
   if (!isSuccess) {
     return h
       .response({
         status: "fail",
-        message: messages.DELETE_FAIL_ID_NOT_FOUND,
+        messages: messages.DELETE_FAIL_ID_NOT_FOUND,
       })
       .code(404);
   }
